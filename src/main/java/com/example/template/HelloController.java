@@ -1,26 +1,13 @@
 package com.example.template;
-
-import javafx.animation.AnimationTimer;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 
 import javafx.scene.layout.GridPane;
 
-import java.util.ArrayList;
 
 public class HelloController {
-
-
-
-
-    // Button[][] btn =new Button[20][20];
-    // private int[][] board = new int[20][20];
-    // private ArrayList<RedBug> redBugs = new ArrayList<>();
-    // private ArrayList<BlueBug> blueBugs = new ArrayList<>();
     @FXML
     private GridPane playBoard;
-    public void initilize(){
+    public void initialize(){
         Render.startRendering(playBoard);
     }
     //public void handleSetup(ActionEvent actionEvent) {

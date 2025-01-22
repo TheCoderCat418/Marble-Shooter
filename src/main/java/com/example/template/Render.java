@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
 public class Render {
-    private static Position gridSize;
+    private static Position gridSize = new Position(600, 800);
     private static Tile[][] map = new Tile[gridSize.x/10][gridSize.y/10];
     private static boolean renderStatus = false;
     public static void startRendering(GridPane gp){
@@ -15,7 +15,8 @@ public class Render {
         for(int i = 0; i < gridSize.x/10; i++){
             for(int j = 0; j < gridSize.y/10; j++){
                 map[i][j] = new Tile(new Button("a"),TileType.BOARDER);
-                gp.add(map[i][j].linkedButton, i, j);
+                gp.add(map[i][j].linkedButton, j, i);
+                
             }
         }
         
