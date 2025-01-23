@@ -1,25 +1,60 @@
 package com.example.template;
 
+
 import javafx.animation.AnimationTimer;
-import javafx.scene.control.Button;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.text.Font;
 
 public class Render {
-    private static Position gridSize = new Position(600, 800);
-    private static Tile[][] map = new Tile[gridSize.x/10][gridSize.y/10];
+    private static Position gridSize = new Position(10, 10);
+    private static Tile[][] map = new Tile[gridSize.x][gridSize.y];
     private static boolean renderStatus = false;
     public static void startRendering(GridPane gp){
         if(renderStatus){
             return;
         }
-        for(int i = 0; i < gridSize.x/10; i++){
-            for(int j = 0; j < gridSize.y/10; j++){
-                map[i][j] = new Tile(new Button("a"),TileType.BOARDER);
-                gp.add(map[i][j].linkedButton, j, i);
+        gp.getChildren().clear();
+        for(int i = 0; i < gridSize.x; i++){
+            gp.getColumnConstraints()
+                    .add(new ColumnConstraints(gp.getPrefWidth() / gridSize.x));
+            for(int j = 0; j < gridSize.y; j++){
+                gp.getRowConstraints()
+                        .add(new RowConstraints(gp.getPrefHeight() / gridSize.y));
+                Pane aLabel = new Pane();
+                aLabel.setPrefWidth(gp.getPrefWidth() / gridSize.x);
+                aLabel.setPrefHeight(gp.getPrefHeight() / gridSize.y);
+
+                aLabel.setOnMouseEntered((mouseEvent) -> {
+                    Pane l = (Pane) mouseEvent.getSource();
+                    System.out.println(l.getStyle());
+                    l.setStyle("-fx-background-color: green;");
+                });
+                aLabel.setOnMouseExited((mouseEvent) -> {
+                    Pane l = (Pane) mouseEvent.getSource();
+                    l.setStyle("");
+                });
+
+                TileType tt = TileType.EMPTY;
+                if(i == 0 || j == 0 || i == gridSize.x-1 || j == gridSize.y-1){
+                    tt = TileType.BOARDER;
+                }
+
                 
+
+
+
+
+
+
+                map[i][j] = new Tile(aLabel,tt);
+                gp.add(map[i][j].linkedButton, i, j);
             }
         }
-        
         new AnimationTimer(){
             @Override
             public void handle(long now) {
@@ -34,7 +69,7 @@ public class Render {
             for (int j = 0; j < map[0].length; j++) {
                 switch (map[i][j].tt) {
                     case BOARDER:
-                        
+                        map[i][j].linkedButton.setStyle("-fx-background-color: black");
                         break;
                 
                     default:
