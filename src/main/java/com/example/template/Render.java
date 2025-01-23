@@ -25,18 +25,25 @@ public class Render {
             for(int j = 0; j < gridSize.y; j++){
                 gp.getRowConstraints()
                         .add(new RowConstraints(gp.getPrefHeight() / gridSize.y));
-                Pane aLabel = new Pane();
-                aLabel.setPrefWidth(gp.getPrefWidth() / gridSize.x);
-                aLabel.setPrefHeight(gp.getPrefHeight() / gridSize.y);
+                Pane pane = new Pane();
+                pane.setPrefWidth(gp.getPrefWidth() / gridSize.x);
+                pane.setPrefHeight(gp.getPrefHeight() / gridSize.y);
 
-                aLabel.setOnMouseEntered((mouseEvent) -> {
+                pane.setOnMouseEntered((mouseEvent) -> {
                     Pane l = (Pane) mouseEvent.getSource();
                     System.out.println(l.getStyle());
                     l.setStyle("-fx-background-color: green;");
                 });
-                aLabel.setOnMouseExited((mouseEvent) -> {
+                pane.setOnMouseExited((mouseEvent) -> {
                     Pane l = (Pane) mouseEvent.getSource();
                     l.setStyle("");
+                });
+                pane.setOnMouseClicked((mouseEvent) -> {
+                    Pane l = (Pane) mouseEvent.getSource();
+                    Tile t = findTileFromPane(l);
+                    System.out.println(findTileFromPane(pane).tt);
+                    System.out.println(t.tt);
+
                 });
 
                 TileType tt = TileType.EMPTY;
@@ -51,7 +58,7 @@ public class Render {
 
 
 
-                map[i][j] = new Tile(aLabel,tt);
+                map[i][j] = new Tile(pane,tt);
                 gp.add(map[i][j].linkedButton, i, j);
             }
         }
@@ -69,7 +76,7 @@ public class Render {
             for (int j = 0; j < map[0].length; j++) {
                 switch (map[i][j].tt) {
                     case BOARDER:
-                        map[i][j].linkedButton.setStyle("-fx-background-color: black");
+                        map[i][j].linkedButton.setStyle("-fx-background-color: black;");
                         break;
                 
                     default:
@@ -87,6 +94,17 @@ public class Render {
             for(int j = 0; j<map[i].length; j++){
                 if(map[i][j] == tile){
                     return new Position(i, j);
+                }
+            }
+        }
+        return null;
+    }
+
+    static public Tile findTileFromPane(Pane pane){
+        for(int i = 0; i<map.length; i++){
+            for(int j = 0; j<map[i].length; j++){
+                if(map[i][j].linkedButton == pane){
+                    return map[i][j];
                 }
             }
         }
