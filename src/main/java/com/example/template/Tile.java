@@ -14,6 +14,7 @@ public class Tile {
     private int clkdvsr = 100;
     private int clkcnt = 0;
 
+    private long a = 0;
 
     public Tile(Pane linkedButton, TileType tt){
         this.linkedButton = linkedButton;
@@ -28,7 +29,8 @@ public class Tile {
     }
 
     public void renderRun(){
-        System.out.println("I ran. T ");
+        System.out.println("I ran. T " + (System.currentTimeMillis()-a));
+        a = System.currentTimeMillis();
     }
 
     public void clockDivider(){

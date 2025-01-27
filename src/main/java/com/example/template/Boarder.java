@@ -10,6 +10,7 @@ public class Boarder extends Tile{
 
     @Override
     protected void onClick(MouseEvent me){
-        System.out.println(Render.findPositionFromTile(this).toString());
+        Position p = Render.findPositionFromTile(this);
+        System.out.println(p.toString());
     }
 }

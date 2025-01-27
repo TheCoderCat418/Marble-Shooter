@@ -11,6 +11,8 @@ public class Entity extends Tile{
     private int clkdvsr = 50;
     private int clkcnt = 0;
 
+    private long a = 0;
+
 
     public Entity(Pane linkedButton, Position cPosition){
         super(linkedButton, TileType.ENTITY);
@@ -18,7 +20,8 @@ public class Entity extends Tile{
     }
     
     public void renderRun(){ //TASKS: MOVE
-        System.out.println("I ran. E ");
+        System.out.println("I ran. E " + (System.currentTimeMillis()-a));
+        a = System.currentTimeMillis();
     }
     
     public void clockDivider(){

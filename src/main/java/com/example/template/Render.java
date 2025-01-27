@@ -84,12 +84,14 @@ public class Render {
     static private void renderLoop(){
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
-                switch (map[i][j].tt) {
+                Tile t = map[i][j];
+                switch (t.tt) {
                     case BOARDER:
-                        map[i][j].linkedButton.setStyle("-fx-background-color: black;");
+                        t.linkedButton.setStyle("-fx-background-color: black;");
                         break;
                     case ENTITY:
-                        map[i][j].clockDivider();
+                        t.linkedButton.setStyle("-fx-background-color: blue;");
+                        t.clockDivider();
                 
                     default:
                         break;
