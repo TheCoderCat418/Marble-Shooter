@@ -15,10 +15,12 @@ public class Render {
     private static Tile[][] map = new Tile[gridSize.x][gridSize.y];
     private static boolean renderStatus = false;
     public static void startRendering(GridPane gp){
+        boolean a = true;
         if(renderStatus){
             return;
         }
         gp.getChildren().clear();
+
         for(int i = 0; i < gridSize.x; i++){
             gp.getColumnConstraints()
                     .add(new ColumnConstraints(gp.getPrefWidth() / gridSize.x));
@@ -45,20 +47,28 @@ public class Render {
                     System.out.println(t.tt);
 
                 });
-
-                TileType tt = TileType.EMPTY;
-                if(i == 0 || j == 0 || i == gridSize.x-1 || j == gridSize.y-1){
-                    tt = TileType.BOARDER;
-                }
+                
 
                 
 
+                TileType tt = TileType.EMPTY;
+                if(i == 0 || j == 0 || i == gridSize.x-1 || j == gridSize.y-1){
+                    map[i][j] = new Boarder(pane);
+                }else{
+                    map[i][j] = new Tile(pane, tt);
+                }
+
+                if(a){
+                    map[i][j] = new Entity(pane, null);
+                    a = false;
+                }
 
 
 
 
 
-                map[i][j] = new Tile(pane,tt);
+
+                
                 gp.add(map[i][j].linkedButton, i, j);
             }
         }
@@ -78,10 +88,14 @@ public class Render {
                     case BOARDER:
                         map[i][j].linkedButton.setStyle("-fx-background-color: black;");
                         break;
+                    case ENTITY:
+                        map[i][j].clockDivider();
                 
                     default:
                         break;
                 }
+
+            
             }
         }
     }
