@@ -12,9 +12,11 @@ import javafx.scene.text.Font;
 
 public class Render {
     private static Position gridSize = new Position(10, 10);
-    private static Tile[][] map = new Tile[gridSize.x][gridSize.y];
+    public static Tile[][] map = new Tile[gridSize.x][gridSize.y];
     private static boolean renderStatus = false;
-    public static void startRendering(GridPane gp){
+    private static GridPane gp;
+    public static void startRendering(GridPane gridpane){
+        gp = gridpane;
         boolean a = true;
         if(renderStatus){
             return;
@@ -88,7 +90,8 @@ public class Render {
                 switch (t.tt) {
                     case BOARDER:
                         t.linkedButton.setStyle("-fx-background-color: black;");
-                        break;
+    //FIX
+                            break;
                     case ENTITY:
                         t.linkedButton.setStyle("-fx-background-color: blue;");
                         t.clockDivider();
@@ -125,5 +128,29 @@ public class Render {
             }
         }
         return null;
+    }
+
+    static public Pane basicPane(){
+        Pane pane = new Pane();
+                pane.setPrefWidth(gp.getPrefWidth() / gridSize.x);
+                pane.setPrefHeight(gp.getPrefHeight() / gridSize.y);
+
+                pane.setOnMouseEntered((mouseEvent) -> {
+                    Pane l = (Pane) mouseEvent.getSource();
+                    System.out.println(l.getStyle());
+                    l.setStyle("-fx-background-color: green;");
+                });
+                pane.setOnMouseExited((mouseEvent) -> {
+                    Pane l = (Pane) mouseEvent.getSource();
+                    l.setStyle("");
+                });
+                pane.setOnMouseClicked((mouseEvent) -> {
+                    Pane l = (Pane) mouseEvent.getSource();
+                    Tile t = findTileFromPane(l);
+                    System.out.println(findTileFromPane(pane).tt);
+                    System.out.println(t.tt);
+
+                });
+                return pane;
     }
 }

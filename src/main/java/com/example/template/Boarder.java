@@ -13,4 +13,6 @@ public class Boarder extends Tile{
         Position p = Render.findPositionFromTile(this);
         System.out.println(p.toString());
     }
+
+    
 }
