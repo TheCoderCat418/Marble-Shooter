@@ -2,17 +2,16 @@ package com.example.template;
 
 
 import javafx.animation.AnimationTimer;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
+
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.text.Font;
 
 public class Render {
     private static Position gridSize = new Position(10, 10);
-    public static Tile[][] map = new Tile[gridSize.x][gridSize.y];
+    public static Tile[][] tileMap = new Tile[gridSize.x][gridSize.y];
+    public static Pane[][] paneMap = new Pane[gridSize.x][gridSize.y];
     private static boolean renderStatus = false;
     private static GridPane gp;
     public static void startRendering(GridPane gridpane){
@@ -42,36 +41,33 @@ public class Render {
                     Pane l = (Pane) mouseEvent.getSource();
                     l.setStyle("");
                 });
-                pane.setOnMouseClicked((mouseEvent) -> {
-                    Pane l = (Pane) mouseEvent.getSource();
-                    Tile t = findTileFromPane(l);
-                    System.out.println(findTileFromPane(pane).tt);
-                    System.out.println(t.tt);
 
-                });
+                //MOUSE CLICK VERY TRICKY
+                //Would need a proxy class (Probobly this one)
+                //pane.setOnMouseClicked((mouseEvent) -> {
+                    // Pane l = (Pane) mouseEvent.getSource();
+                    // Tile t = findTileFromPane(l);
+                    // System.out.println(findTileFromPane(pane).tt);
+                    // System.out.println(t.tt);
+
+                //});
                 
 
                 
 
                 TileType tt = TileType.EMPTY;
                 if(i == 0 || j == 0 || i == gridSize.x-1 || j == gridSize.y-1){
-                    map[i][j] = new Boarder(pane);
+                    tileMap[i][j] = new Boarder(pane, new Position(i, j));
                 }else{
-                    map[i][j] = new Tile(pane, tt);
+                    tileMap[i][j] = new Tile(new Position(i, j), tt);
                 }
 
                 if(a){
-                    map[i][j] = new Entity(pane, null);
+                    tileMap[i][j] = new Entity(new Position(i, j), Direction.RIGHT);
                     a = false;
                 }
-
-
-
-
-
-
-                
-                gp.add(map[i][j].linkedButton, i, j);
+                paneMap[i][j] = pane;
+                gp.add(paneMap[i][j], i, j);
             }
         }
         new AnimationTimer(){
@@ -84,18 +80,22 @@ public class Render {
     }
 
     static private void renderLoop(){
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                Tile t = map[i][j];
+        for (int i = 0; i < tileMap.length; i++) {
+            for (int j = 0; j < tileMap[0].length; j++) {
+                Tile t = tileMap[i][j];
+                Pane pane = findPaneFromTile(t);
+                
                 switch (t.tt) {
                     case BOARDER:
-                        t.linkedButton.setStyle("-fx-background-color: black;");
-    //FIX
-                            break;
+                        pane.setStyle("-fx-background-color: black;");
+                                                    break;
                     case ENTITY:
-                        t.linkedButton.setStyle("-fx-background-color: blue;");
+                        pane.setStyle("-fx-background-color: blue;");
                         t.clockDivider();
-                
+                        break;
+                    case EMPTY:
+                    pane.setStyle("");
+                    break;
                     default:
                         break;
                 }
@@ -108,49 +108,49 @@ public class Render {
 
 
 
-    static public Position findPositionFromTile(Tile tile){
-        for(int i = 0; i<map.length; i++){
-            for(int j = 0; j<map[i].length; j++){
-                if(map[i][j] == tile){
-                    return new Position(i, j);
+    static public Pane findPaneFromTile(Tile tile){
+        for(int i = 0; i<tileMap.length; i++){
+            for(int j = 0; j<tileMap[i].length; j++){
+                if(tileMap[i][j] == tile){
+                    return paneMap[i][j];
                 }
             }
         }
         return null;
     }
 
-    static public Tile findTileFromPane(Pane pane){
-        for(int i = 0; i<map.length; i++){
-            for(int j = 0; j<map[i].length; j++){
-                if(map[i][j].linkedButton == pane){
-                    return map[i][j];
-                }
-            }
-        }
-        return null;
-    }
+    // static public Tile findTileFromPane(Pane pane){
+    //     for(int i = 0; i<map.length; i++){
+    //         for(int j = 0; j<map[i].length; j++){
+    //             if(map[i][j].linkedButton == pane){
+    //                 return map[i][j];
+    //             }
+    //         }
+    //     }
+    //     return null;
+    // }
 
-    static public Pane basicPane(){
-        Pane pane = new Pane();
-                pane.setPrefWidth(gp.getPrefWidth() / gridSize.x);
-                pane.setPrefHeight(gp.getPrefHeight() / gridSize.y);
+    // static public Pane basicPane(){
+    //     Pane pane = new Pane();
+    //             pane.setPrefWidth(gp.getPrefWidth() / gridSize.x);
+    //             pane.setPrefHeight(gp.getPrefHeight() / gridSize.y);
 
-                pane.setOnMouseEntered((mouseEvent) -> {
-                    Pane l = (Pane) mouseEvent.getSource();
-                    System.out.println(l.getStyle());
-                    l.setStyle("-fx-background-color: green;");
-                });
-                pane.setOnMouseExited((mouseEvent) -> {
-                    Pane l = (Pane) mouseEvent.getSource();
-                    l.setStyle("");
-                });
-                pane.setOnMouseClicked((mouseEvent) -> {
-                    Pane l = (Pane) mouseEvent.getSource();
-                    Tile t = findTileFromPane(l);
-                    System.out.println(findTileFromPane(pane).tt);
-                    System.out.println(t.tt);
+    //             pane.setOnMouseEntered((mouseEvent) -> {
+    //                 Pane l = (Pane) mouseEvent.getSource();
+    //                 System.out.println(l.getStyle());
+    //                 l.setStyle("-fx-background-color: green;");
+    //             });
+    //             pane.setOnMouseExited((mouseEvent) -> {
+    //                 Pane l = (Pane) mouseEvent.getSource();
+    //                 l.setStyle("");
+    //             });
+    //             pane.setOnMouseClicked((mouseEvent) -> {
+    //                 Pane l = (Pane) mouseEvent.getSource();
+    //                 Tile t = findTileFromPane(l);
+    //                 System.out.println(findTileFromPane(pane).tt);
+    //                 System.out.println(t.tt);
 
-                });
-                return pane;
-    }
+    //             });
+    //             return pane;
+    // }
 }

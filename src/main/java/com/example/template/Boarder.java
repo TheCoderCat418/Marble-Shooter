@@ -4,14 +4,19 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 public class Boarder extends Tile{
-    public Boarder(Pane linkedButton){
-        super(linkedButton, TileType.BOARDER);
+    public Pane linkedPane;
+    public Boarder(Pane linkedPane, Position borderPos){
+        super(borderPos, TileType.BOARDER);
+        this.linkedPane = linkedPane;
+        linkedPane.setOnMouseClicked((me) -> {
+            onClick(me);
+        });
+        
     }
 
-    @Override
     protected void onClick(MouseEvent me){
-        Position p = Render.findPositionFromTile(this);
-        System.out.println(p.toString());
+        // Position p = Render.findPositionFromTile(this);
+        // System.out.println(p.toString());
     }
 
     
