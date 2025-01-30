@@ -1,4 +1,4 @@
-package com.example.template;
+package com.thecodercat418.marbleShooter;
 
 
 import javafx.animation.AnimationTimer;
@@ -9,7 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 
 public class Render {
-    public static Position gridSize = new Position(10, 10);
+    public static Position gridSize = new Position(20, 20);
     public static Tile[][] tileMap = new Tile[gridSize.x][gridSize.y];
     public static Pane[][] paneMap = new Pane[gridSize.x][gridSize.y];
     //TODO: Tri-Layer? Animation Map??

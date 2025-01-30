@@ -1,4 +1,4 @@
-package com.example.template;
+package com.thecodercat418.marbleShooter;
 
 public enum Direction { // Every possible direction.
     RIGHT,

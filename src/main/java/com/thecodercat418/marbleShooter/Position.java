@@ -1,4 +1,4 @@
-package com.example.template;
+package com.thecodercat418.marbleShooter;
 
 public class Position {
     int x;

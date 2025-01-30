@@ -1,4 +1,4 @@
-package com.example.template;
+package com.thecodercat418.marbleShooter;
 
 
 public class Tile {
@@ -6,8 +6,8 @@ public class Tile {
     public TileType tt;
     public boolean frozen = false;
 
-    private int clkdvsr = 100;
-    private int clkcnt = 0;
+    protected int clkdvsr = 100;
+    protected int clkcnt = 0;
 
     // private long a = 0;
 

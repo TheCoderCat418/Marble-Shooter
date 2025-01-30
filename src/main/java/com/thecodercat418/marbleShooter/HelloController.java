@@ -1,4 +1,4 @@
-package com.example.template;
+package com.thecodercat418.marbleShooter;
 import javafx.fxml.FXML;
 
 import javafx.scene.layout.GridPane;
