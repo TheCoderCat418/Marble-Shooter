@@ -4,11 +4,12 @@ package com.example.template;
 public class Tile {
     public Position tilepos;
     public TileType tt;
+    public boolean frozen = false;
 
     private int clkdvsr = 100;
     private int clkcnt = 0;
 
-    private long a = 0;
+    // private long a = 0;
 
     public Tile(Position tilepos, TileType tt){
         this.tilepos = tilepos;

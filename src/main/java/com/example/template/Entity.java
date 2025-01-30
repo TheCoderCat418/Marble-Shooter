@@ -3,7 +3,6 @@ package com.example.template;
 
 public class Entity extends Tile{
     private Position toMoveTo = new Position(7, 7);
-    private Position cPosition = new Position(0, 0);
 
     private int clkdvsr = 50;
     private int clkcnt = 0;
@@ -11,11 +10,30 @@ public class Entity extends Tile{
     private long a = 0;
 
 
-    public Entity(Position cPosition, Direction direction){
-        super(cPosition, TileType.ENTITY);
-        Position indexPos = new Position(cPosition.x, cPosition.y);
+    public Entity(Position tilepos, Direction direction, TileType t){
+        super(tilepos, t);
+        System.out.println(tilepos);
+        this.tilepos = tilepos;
+        Position indexPos = new Position(tilepos.x, tilepos.y);
         while (true) {
             if(!Render.tileMap[indexPos.x][indexPos.y].tt.equals(TileType.EMPTY)){
+                toMoveTo = indexPos;
+                break;
+            }
+            switch (direction) {
+                case UP:
+                indexPos.y--;
+                break;
+                case DOWN:
+                indexPos.y++;
+                break;
+                case LEFT:
+                indexPos.x--;
+                break;
+                case RIGHT:
+                indexPos.x++;
+                break;
+                default:
                 break;
             }
             
@@ -27,24 +45,26 @@ public class Entity extends Tile{
     public void renderRun(){ //TASKS: MOVE
         System.out.println("I ran. E " + (System.currentTimeMillis()-a));
         a = System.currentTimeMillis();
-        Position oldPos = new Position(cPosition.x, cPosition.y);
+        Position oldPos = new Position(tilepos.x, tilepos.y);
 
-        if(cPosition.x < toMoveTo.x){
-            cPosition.x++;
-        }else if(cPosition.x > toMoveTo.x){
-            cPosition.x--;
+        if(tilepos.x < toMoveTo.x){
+            tilepos.x++;
+        }else if(tilepos.x > toMoveTo.x){
+            tilepos.x--;
         }
-        if(cPosition.y < toMoveTo.y){
-            cPosition.y++;
-        }else if(cPosition.y > toMoveTo.y){
-            cPosition.y--;
+        if(tilepos.y < toMoveTo.y){
+            tilepos.y++;
+        }else if(tilepos.y > toMoveTo.y){
+            tilepos.y--;
         }
-        System.out.println(cPosition);
+        System.out.println(tilepos);
         System.out.println(oldPos);
-        if(cPosition.x != toMoveTo.x || cPosition.y != toMoveTo.y){
-            Render.tileMap[cPosition.x][cPosition.y] = Render.tileMap[oldPos.x][oldPos.y];
+        if(tilepos.x != toMoveTo.x || tilepos.y != toMoveTo.y){
+            Render.tileMap[tilepos.x][tilepos.y] = Render.tileMap[oldPos.x][oldPos.y];
             Render.tileMap[oldPos.x][oldPos.y] = new Tile(oldPos, TileType.EMPTY);
+            return;
         }
+        frozen = true;
     }
     
     public void clockDivider(){

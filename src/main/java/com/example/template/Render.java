@@ -9,14 +9,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 
 public class Render {
-    private static Position gridSize = new Position(10, 10);
+    public static Position gridSize = new Position(10, 10);
     public static Tile[][] tileMap = new Tile[gridSize.x][gridSize.y];
     public static Pane[][] paneMap = new Pane[gridSize.x][gridSize.y];
+    //TODO: Tri-Layer? Animation Map??
     private static boolean renderStatus = false;
+    public static boolean teamSideA = true;
     private static GridPane gp;
     public static void startRendering(GridPane gridpane){
         gp = gridpane;
-        boolean a = true;
         if(renderStatus){
             return;
         }
@@ -33,9 +34,11 @@ public class Render {
                 pane.setPrefHeight(gp.getPrefHeight() / gridSize.y);
 
                 pane.setOnMouseEntered((mouseEvent) -> {
-                    Pane l = (Pane) mouseEvent.getSource();
-                    System.out.println(l.getStyle());
-                    l.setStyle("-fx-background-color: green;");
+                    //Pane l = (Pane) mouseEvent.getSource();
+                    //System.out.println(l.getStyle());
+                    //l.setStyle("-fx-background-color: green;");
+
+                    //Perfect place to use a render map
                 });
                 pane.setOnMouseExited((mouseEvent) -> {
                     Pane l = (Pane) mouseEvent.getSource();
@@ -61,15 +64,11 @@ public class Render {
                 }else{
                     tileMap[i][j] = new Tile(new Position(i, j), tt);
                 }
-
-                if(a){
-                    tileMap[i][j] = new Entity(new Position(i, j), Direction.RIGHT);
-                    a = false;
-                }
                 paneMap[i][j] = pane;
                 gp.add(paneMap[i][j], i, j);
             }
         }
+        
         new AnimationTimer(){
             @Override
             public void handle(long now) {
@@ -83,13 +82,20 @@ public class Render {
         for (int i = 0; i < tileMap.length; i++) {
             for (int j = 0; j < tileMap[0].length; j++) {
                 Tile t = tileMap[i][j];
+                if(t.frozen){
+                    continue;
+                }
                 Pane pane = findPaneFromTile(t);
                 
                 switch (t.tt) {
                     case BOARDER:
                         pane.setStyle("-fx-background-color: black;");
                                                     break;
-                    case ENTITY:
+                    case A_ENTITY:
+                        pane.setStyle("-fx-background-color: red;");
+                        t.clockDivider();
+                        break;
+                    case B_ENTITY:
                         pane.setStyle("-fx-background-color: blue;");
                         t.clockDivider();
                         break;
