@@ -10,10 +10,10 @@ public class Entity extends Tile {
         super.clkdvsr = 15;
         System.out.println(tilepos);
         this.tilepos = tilepos;
-        if (this.getClass() == Entity.class) { // If the class is being extended, do not set up the toMoveTo varible.
+        //if (this.getClass() == Entity.class) { // If the class is being extended, do not set up the toMoveTo varible.
                                                // Allow the child constructor to do that.
             setToMoveTo(direction);
-        }
+        //}
         // TODO: WORK ON
         // toMoveTo = new Position(, );
     }
@@ -66,6 +66,11 @@ public class Entity extends Tile {
             return;
         }
         frozen = true;
+        onFreeze();
+    }
+
+    public void onFreeze(){
+        
     }
 
     @Override

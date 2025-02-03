@@ -14,7 +14,7 @@ public class Boarder extends Tile{
         
     }
 
-    protected void onClick(MouseEvent me){
+    public void onClick(MouseEvent me){
         //Render.tileMap[1][1] = new Entity(new Position(1, 1), Direction.RIGHT);
         Position p = new Position(0, 0);
         Direction d = null;
@@ -32,13 +32,31 @@ public class Boarder extends Tile{
             p.y--;
         }
 
+        TileType tileType = TileType.EMPTY;
+
         if(Render.teamSideA){
-            Render.tileMap[tilepos.x+p.x][tilepos.y+p.y] = new Entity(new Position(tilepos.x+p.x, tilepos.y+p.y), d, TileType.A_ENTITY);
+            tileType = TileType.A_ENTITY;
             Render.teamSideA = false;
         } else {
-            Render.tileMap[tilepos.x+p.x][tilepos.y+p.y] = new Entity(new Position(tilepos.x+p.x, tilepos.y+p.y), d, TileType.B_ENTITY);
+            tileType = TileType.B_ENTITY;
             Render.teamSideA = true;
         }
+
+        if(HelloController.nextTile != TileType.EMPTY){
+            tileType = HelloController.nextTile;
+            HelloController.nextTile = TileType.EMPTY;
+        }
+
+        switch (tileType) {
+            case BOMBER:
+            Render.tileMap[tilepos.x+p.x][tilepos.y+p.y] = new Bomber(new Position(tilepos.x+p.x, tilepos.y+p.y), d);
+            return;
+        
+            default:
+                break;
+        }
+
+        Render.tileMap[tilepos.x+p.x][tilepos.y+p.y] = new Entity(new Position(tilepos.x+p.x, tilepos.y+p.y), d, tileType);
 
         
     }

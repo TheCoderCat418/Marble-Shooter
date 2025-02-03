@@ -99,6 +99,10 @@ public class Render {
                         pane.setStyle("-fx-background-color: blue;");
                         t.clockDivider();
                         break;
+                    case BOMBER:
+                    pane.setStyle("-fx-background-color: brown;");
+                    t.clockDivider();
+                    break;
                     case EMPTY:
                     pane.setStyle("");
                     break;
