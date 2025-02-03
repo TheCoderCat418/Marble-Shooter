@@ -45,18 +45,22 @@ public class Boarder extends Tile{
         if(HelloController.nextTile != TileType.EMPTY){
             tileType = HelloController.nextTile;
             HelloController.nextTile = TileType.EMPTY;
-        }
 
-        switch (tileType) {
-            case BOMBER:
-            Render.tileMap[tilepos.x+p.x][tilepos.y+p.y] = new Bomber(new Position(tilepos.x+p.x, tilepos.y+p.y), d);
-            return;
-        
-            default:
+            switch (tileType) {
+                case BOMBER:
+                Render.tileMap[tilepos.x+p.x][tilepos.y+p.y] = new Bomber(new Position(tilepos.x+p.x, tilepos.y+p.y), d);
                 break;
-        }
-
-        Render.tileMap[tilepos.x+p.x][tilepos.y+p.y] = new Entity(new Position(tilepos.x+p.x, tilepos.y+p.y), d, tileType);
+                
+                case LTURN:
+                Render.tileMap[tilepos.x+p.x][tilepos.y+p.y] = new Turn(new Position(tilepos.x+p.x, tilepos.y+p.y), d, Direction.LEFT);
+                break;
+    
+                case RTURN:
+                Render.tileMap[tilepos.x+p.x][tilepos.y+p.y] = new Turn(new Position(tilepos.x+p.x, tilepos.y+p.y), d, Direction.RIGHT);
+                break;
+            }
+        }else{
+        Render.tileMap[tilepos.x+p.x][tilepos.y+p.y] = new Entity(new Position(tilepos.x+p.x, tilepos.y+p.y), d, tileType);}
 
         
     }

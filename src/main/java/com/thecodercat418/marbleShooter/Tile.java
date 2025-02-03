@@ -18,8 +18,7 @@ public class Tile {
     }
 
     public void renderRun(){
-        // System.out.println("I ran. T " + (System.currentTimeMillis()-a));
-        // a = System.currentTimeMillis();
+        
     }
 
     public void clockDivider(){

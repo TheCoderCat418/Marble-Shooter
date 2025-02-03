@@ -5,6 +5,8 @@ public enum TileType {
     EMPTY,
     A_ENTITY,
     B_ENTITY,
-    BOMBER
+    BOMBER,
+    LTURN,
+    RTURN
 
 }

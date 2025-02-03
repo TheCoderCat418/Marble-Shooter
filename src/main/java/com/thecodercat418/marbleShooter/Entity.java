@@ -7,7 +7,7 @@ public class Entity extends Tile {
 
     public Entity(Position tilepos, Direction direction, TileType t) {
         super(tilepos, t);
-        super.clkdvsr = 15;
+        super.clkdvsr = 10;
         System.out.println(tilepos);
         this.tilepos = tilepos;
         //if (this.getClass() == Entity.class) { // If the class is being extended, do not set up the toMoveTo varible.
@@ -22,6 +22,23 @@ public class Entity extends Tile {
         Position indexPos = new Position(tilepos.x, tilepos.y);
             while (true) {
                 if (!Render.tileMap[indexPos.x][indexPos.y].tt.equals(TileType.EMPTY)) {
+                    switch (direction) {
+                        case UP:
+                            indexPos.y++;
+                            break;
+                        case DOWN:
+                            indexPos.y--;
+                            break;
+                        case LEFT:
+                            indexPos.x++;
+                            break;
+                        case RIGHT:
+                            indexPos.x--;
+                            break;
+                        default:
+                            break;
+                    }
+
                     toMoveTo = indexPos;
                     break;
                 }
@@ -84,21 +101,5 @@ public class Entity extends Tile {
             System.err.println("ENTITY MISSING ACTION");
         }
     }
-
-    // public void clockDivider(){
-    // System.out.println("E RUN");
-    // if(clkdvsr <= 1){
-    // renderRun();
-    // return;
-    // }
-
-    // if(clkdvsr > clkcnt){
-    // clkcnt++;
-    // }else{
-    // renderRun();
-    // clkcnt = 0;
-    // return;
-    // }
-    // }
 
 }
