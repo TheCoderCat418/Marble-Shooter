@@ -52,11 +52,15 @@ public class Boarder extends Tile{
                 break;
                 
                 case LTURN:
-                Render.tileMap[tilepos.x+p.x][tilepos.y+p.y] = new Turn(new Position(tilepos.x+p.x, tilepos.y+p.y), d, Direction.LEFT);
+                Render.tileMap[tilepos.x+p.x][tilepos.y+p.y] = new Turn(new Position(tilepos.x+p.x, tilepos.y+p.y), d, true);
                 break;
     
                 case RTURN:
-                Render.tileMap[tilepos.x+p.x][tilepos.y+p.y] = new Turn(new Position(tilepos.x+p.x, tilepos.y+p.y), d, Direction.RIGHT);
+                Render.tileMap[tilepos.x+p.x][tilepos.y+p.y] = new Turn(new Position(tilepos.x+p.x, tilepos.y+p.y), d, false);
+                break;
+
+                case STRIKER:
+                Render.tileMap[tilepos.x+p.x][tilepos.y+p.y] = new Striker(new Position(tilepos.x+p.x, tilepos.y+p.y), d);
                 break;
             }
         }else{

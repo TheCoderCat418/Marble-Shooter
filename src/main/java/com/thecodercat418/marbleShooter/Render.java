@@ -108,6 +108,10 @@ public class Render {
                         pane.setStyle("-fx-background-color: green;");
                         t.clockDivider();
                         break;
+                    case STRIKER:
+                        pane.setStyle("-fx-background-color: orange;");
+                        t.clockDivider();
+                        break;
                     case EMPTY:
                         pane.setStyle("");
                         break;
