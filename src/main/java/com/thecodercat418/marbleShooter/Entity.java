@@ -20,40 +20,40 @@ public class Entity extends Tile {
 
     public void setToMoveTo(Direction direction){
         Position indexPos = new Position(tilepos.x, tilepos.y);
-            while (true) {
-                if (!Render.tileMap[indexPos.x][indexPos.y].tt.equals(TileType.EMPTY)) {
-                    switch (direction) {
-                        case UP:
-                            indexPos.y++;
-                            break;
-                        case DOWN:
-                            indexPos.y--;
-                            break;
-                        case LEFT:
-                            indexPos.x++;
-                            break;
-                        case RIGHT:
-                            indexPos.x--;
-                            break;
-                        default:
-                            break;
-                    }
-
-                    toMoveTo = indexPos;
-                    break;
-                }
+        boolean finalized = false;
+            while (!finalized) {
                 switch (direction) {
                     case UP:
                         indexPos.y--;
+                        if(!Render.tileMap[indexPos.x][indexPos.y].tt.equals(TileType.EMPTY)){
+                            indexPos.y++;
+                            toMoveTo = indexPos;
+                            finalized = true;
+                        }
                         break;
                     case DOWN:
                         indexPos.y++;
+                        if(!Render.tileMap[indexPos.x][indexPos.y].tt.equals(TileType.EMPTY)){
+                            indexPos.y--;
+                            toMoveTo = indexPos;
+                            finalized = true;
+                        }
                         break;
                     case LEFT:
                         indexPos.x--;
+                        if(!Render.tileMap[indexPos.x][indexPos.y].tt.equals(TileType.EMPTY)){
+                            indexPos.x++;
+                            toMoveTo = indexPos;
+                            finalized = true;
+                        }
                         break;
                     case RIGHT:
                         indexPos.x++;
+                        if(!Render.tileMap[indexPos.x][indexPos.y].tt.equals(TileType.EMPTY)){
+                            indexPos.x--;
+                            toMoveTo = indexPos;
+                            finalized = true;
+                        }
                         break;
                     default:
                         break;
