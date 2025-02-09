@@ -6,8 +6,8 @@ public enum TileType {
     A_ENTITY,
     B_ENTITY,
     BOMBER,
+    COLOR_BOMBER,
     LTURN,
     RTURN,
     STRIKER
-
 }

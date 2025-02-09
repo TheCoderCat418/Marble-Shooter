@@ -16,20 +16,19 @@ public class Turn extends Entity {
             return;
         }
         int base = this.movingDirection.ordinal();
-        if(isLeft){
+        if (isLeft) {
             base--;
-        }else{
+        } else {
             base++;
         }
-        if(base>3){
-            base-=4;
-        }else if(base<0){
-            base+=4;
+        if (base > 3) {
+            base -= 4;
+        } else if (base < 0) {
+            base += 4;
         }
 
-        
         super.setToMoveTo(Direction.values()[base]);
-        
+
         super.frozen = false;
         firstFrozen = false;
     }

@@ -1,6 +1,5 @@
 package com.thecodercat418.marbleShooter;
 
-
 public class Tile {
     public Position tilepos;
     public TileType tt;
@@ -11,32 +10,29 @@ public class Tile {
 
     // private long a = 0;
 
-    public Tile(Position tilepos, TileType tt){
+    public Tile(Position tilepos, TileType tt) {
         this.tilepos = tilepos;
-        
+
         this.tt = tt;
     }
 
-    public void renderRun(){
-        
+    public void renderRun() {
+
     }
 
-    public void clockDivider(){
-        if(clkdvsr <= 1){
+    public void clockDivider() {
+        if (clkdvsr <= 1) {
             renderRun();
             return;
         }
 
-        if(clkdvsr > clkcnt){
+        if (clkdvsr > clkcnt) {
             clkcnt++;
-        }else{
+        } else {
             renderRun();
             clkcnt = 0;
             return;
         }
     }
 
-    
-
-    
 }

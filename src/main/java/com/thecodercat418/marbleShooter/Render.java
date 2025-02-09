@@ -1,14 +1,50 @@
 package com.thecodercat418.marbleShooter;
 
 import javafx.animation.AnimationTimer;
-
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.PieChart.Data;
+import javafx.scene.control.Button;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 
 public class Render {
-    public static Position gridSize = new Position(20, 20);
+  @FXML
+  private GridPane playBoard;
+  @FXML
+  private PieChart pie;
+  public static TileType nextTile = TileType.EMPTY;
+
+  public void initialize() {
+    startRendering(playBoard);
+  }
+
+  public void nextPiece(ActionEvent actionEvent) {
+    Button b = (Button) actionEvent.getSource();
+    switch (b.getText()) {
+      case "Bomb":
+        nextTile = TileType.BOMBER;
+        break;
+      case "Left Turn":
+        nextTile = TileType.LTURN;
+        break;
+      case "Right Turn":
+        nextTile = TileType.RTURN;
+        break;
+      case "Striker":
+        nextTile = TileType.STRIKER;
+        break;
+      case "Color Bomber":
+        nextTile = TileType.COLOR_BOMBER;
+        break;
+    }
+  }
+
+
+   public static Position gridSize = new Position(20, 20);
     public static Tile[][] tileMap = new Tile[gridSize.x][gridSize.y];
     public static Pane[][] paneMap = new Pane[gridSize.x][gridSize.y];
     // TODO: Tri-Layer? Animation Map??
@@ -16,7 +52,7 @@ public class Render {
     public static boolean teamSideA = true;
     private static GridPane gp;
 
-    public static void startRendering(GridPane gridpane) {
+    private void startRendering(GridPane gridpane) {
         gp = gridpane;
         if (renderStatus) {
             return;
@@ -64,24 +100,29 @@ public class Render {
                 paneMap[i][j] = pane;
                 gp.add(paneMap[i][j], i, j);
             }
+            pie.getData().clear();
+            pie.getData().add(new Data("Blank Spaces", (gridSize.x-2)*(gridSize.y-2)));
         }
 
         new AnimationTimer() {
             @Override
             public void handle(long now) {
                 renderLoop();
+
             }
         }.start();
         renderStatus = true;
     }
 
-    static private void renderLoop() {
+    private void renderLoop() {
+        int a = 0;
+        int b = 0;
         for (int i = 0; i < tileMap.length; i++) {
             for (int j = 0; j < tileMap[0].length; j++) {
                 Tile t = tileMap[i][j];
                 if (t.frozen) {
                     continue;
-                }// Still update colors
+                } // Still update colors
                 Pane pane = findPaneFromTile(t);
 
                 switch (t.tt) {
@@ -90,20 +131,20 @@ public class Render {
                         break;
                     case A_ENTITY:
                         pane.setStyle("-fx-background-color: red;");
+                        a++;
                         t.clockDivider();
                         break;
                     case B_ENTITY:
                         pane.setStyle("-fx-background-color: blue;");
+                        b++;
                         t.clockDivider();
                         break;
+                    case COLOR_BOMBER:
                     case BOMBER:
                         pane.setStyle("-fx-background-color: brown;");
                         t.clockDivider();
                         break;
                     case LTURN:
-                        pane.setStyle("-fx-background-color: green;");
-                        t.clockDivider();
-                        break;
                     case RTURN:
                         pane.setStyle("-fx-background-color: green;");
                         t.clockDivider();
@@ -120,6 +161,7 @@ public class Render {
 
             }
         }
+        
     }
 
     static public Pane findPaneFromTile(Tile tile) {
@@ -133,38 +175,5 @@ public class Render {
         return null;
     }
 
-    // static public Tile findTileFromPane(Pane pane){
-    // for(int i = 0; i<map.length; i++){
-    // for(int j = 0; j<map[i].length; j++){
-    // if(map[i][j].linkedButton == pane){
-    // return map[i][j];
-    // }
-    // }
-    // }
-    // return null;
-    // }
-
-    // static public Pane basicPane(){
-    // Pane pane = new Pane();
-    // pane.setPrefWidth(gp.getPrefWidth() / gridSize.x);
-    // pane.setPrefHeight(gp.getPrefHeight() / gridSize.y);
-
-    // pane.setOnMouseEntered((mouseEvent) -> {
-    // Pane l = (Pane) mouseEvent.getSource();
-    // System.out.println(l.getStyle());
-    // l.setStyle("-fx-background-color: green;");
-    // });
-    // pane.setOnMouseExited((mouseEvent) -> {
-    // Pane l = (Pane) mouseEvent.getSource();
-    // l.setStyle("");
-    // });
-    // pane.setOnMouseClicked((mouseEvent) -> {
-    // Pane l = (Pane) mouseEvent.getSource();
-    // Tile t = findTileFromPane(l);
-    // System.out.println(findTileFromPane(pane).tt);
-    // System.out.println(t.tt);
-
-    // });
-    // return pane;
-    // }
+  
 }

@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.GridPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thecodercat418.marbleShooter.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thecodercat418.marbleShooter.Render">
    <children>
-      <GridPane fx:id="playBoard" layoutX="100.0" layoutY="39.0" prefHeight="500.0" prefWidth="500.0">
+      <GridPane fx:id="playBoard" layoutX="150.0" layoutY="47.0" prefHeight="500.0" prefWidth="500.0">
       
       </GridPane>
-      <Button layoutX="74.0" layoutY="585.0" mnemonicParsing="false" onAction="#nextPiece" text="Bomb" />
-      <Button layoutX="142.0" layoutY="585.0" mnemonicParsing="false" onAction="#nextPiece" text="Left Turn" />
-      <Button layoutX="222.0" layoutY="585.0" mnemonicParsing="false" onAction="#nextPiece" prefHeight="25.0" prefWidth="80.0" text="Right Turn" />
-      <Button layoutX="318.0" layoutY="585.0" mnemonicParsing="false" onAction="#nextPiece" text="Striker" />
+      <Button layoutX="214.0" layoutY="610.0" mnemonicParsing="false" onAction="#nextPiece" text="Bomb" />
+      <Button layoutX="666.0" layoutY="732.0" mnemonicParsing="false" onAction="#nextPiece" text="Left Turn" />
+      <Button layoutX="582.0" layoutY="732.0" mnemonicParsing="false" onAction="#nextPiece" text="Right Turn" />
+      <Button layoutX="508.0" layoutY="610.0" mnemonicParsing="false" onAction="#nextPiece" text="Striker" />
+      <Button layoutX="60.0" layoutY="610.0" mnemonicParsing="false" onAction="#nextPiece" text="Color Bomber" />
+      <Button layoutX="195.0" layoutY="638.0" mnemonicParsing="false" onAction="#nextPiece" text="Bigger Bomb" />
+      <Button layoutX="193.0" layoutY="670.0" mnemonicParsing="false" onAction="#nextPiece" text="Biggest Bomb" />
+      <Button layoutX="651.0" layoutY="760.0" mnemonicParsing="false" onAction="#nextPiece" text="Right then Left" />
+      <Button layoutX="533.0" layoutY="747.0" mnemonicParsing="false" onAction="#nextPiece" text="Left Then Right" />
+      <Button layoutX="595.0" layoutY="610.0" mnemonicParsing="false" onAction="#nextPiece" text="Default" />
+      <Label layoutX="30.0" layoutY="76.0" text="Player One:" />
+      <Label layoutX="698.0" layoutY="76.0" text="Player Two:" />
+      <Label layoutX="683.0" layoutY="110.0" text="Tiles Occupied: #" />
+      <Label layoutX="25.0" layoutY="110.0" text="Tiles Occupied: #" />
+      <PieChart fx:id="pie" layoutX="300.0" layoutY="548.0" prefHeight="104.0" prefWidth="13.0" title="Occupation" />
    </children>
 </AnchorPane>
