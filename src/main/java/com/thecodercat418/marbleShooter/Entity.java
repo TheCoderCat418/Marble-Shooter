@@ -6,13 +6,16 @@ public class Entity extends Tile {
     public Direction movingDirection;
     public long a = 0;
 
-    public Entity(Position tilepos, Direction direction, TileType t) {
+    public Entity(Position tilepos, Direction direction, TileType t, boolean still) {
         super(tilepos, t);
         super.clkdvsr = 10;
         System.out.println(tilepos);
         this.movingDirection = direction;
         this.tilepos = tilepos;
+        this.currentAbility = Abilities.IDLE;
+        if(!still){
         setToMoveTo(direction);
+        }
     }
 
     public void setToMoveTo(Direction direction) {
@@ -84,7 +87,7 @@ public class Entity extends Tile {
     }
 
     public void onFreeze() {
-
+        Render.turnOver();
     }
 
     @Override
@@ -94,6 +97,8 @@ public class Entity extends Tile {
 
         if (currentAbility.equals(Abilities.MOVE)) {
             move();
+        }else if(currentAbility.equals(Abilities.IDLE)){
+                this.frozen = true;//Set frozen if not already
         } else {
             System.err.println("ENTITY MISSING ACTION");
         }

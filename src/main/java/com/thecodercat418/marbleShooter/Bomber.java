@@ -5,7 +5,7 @@ public class Bomber extends Entity {
     TileType toMake = TileType.EMPTY;
 
     public Bomber(Position tilepos, Direction direction, TileType toMake, int radius) {
-        super(tilepos, direction, TileType.BOMBER);
+        super(tilepos, direction, TileType.BOMBER, false);
         this.radius = radius;
         this.toMake = toMake;
 
@@ -36,5 +36,6 @@ public class Bomber extends Entity {
 
             }
         }
+        Render.turnOver();
     }
 }

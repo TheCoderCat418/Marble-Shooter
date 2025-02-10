@@ -16,10 +16,13 @@ public class Render {
   private GridPane playBoard;
   @FXML
   private PieChart pie;
+  public static PieChart publicpie;
   public static TileType nextTile = TileType.EMPTY;
+  public boolean running = false;
 
   public void initialize() {
     startRendering(playBoard);
+    publicpie = pie;
   }
 
   public void nextPiece(ActionEvent actionEvent) {
@@ -41,6 +44,13 @@ public class Render {
         nextTile = TileType.COLOR_BOMBER;
         break;
     }
+    running  = true;
+    //Make all buttons lock until done
+
+  }
+  public static void turnOver(){
+    System.out.println(publicpie.getData().getFirst().getName());
+    //unlock buttons
   }
 
 
@@ -117,6 +127,7 @@ public class Render {
     private void renderLoop() {
         int a = 0;
         int b = 0;
+        
         for (int i = 0; i < tileMap.length; i++) {
             for (int j = 0; j < tileMap[0].length; j++) {
                 Tile t = tileMap[i][j];

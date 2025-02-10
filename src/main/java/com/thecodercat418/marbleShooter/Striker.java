@@ -5,7 +5,7 @@ public class Striker extends Entity {
     TileType toMake;
 
     public Striker(Position tilepos, Direction direction) {
-        super(tilepos, direction, TileType.STRIKER);
+        super(tilepos, direction, TileType.STRIKER, false);
         int base = this.movingDirection.ordinal();
         base += 2;
         if (base > 3) {
@@ -40,10 +40,10 @@ public class Striker extends Entity {
             System.out.println(oldPos);
             System.out.println(tilepos);
             Render.tileMap[tilepos.x][tilepos.y] = Render.tileMap[oldPos.x][oldPos.y];
-            Render.tileMap[oldPos.x][oldPos.y] = new Entity(oldPos, d, toMake);
+            Render.tileMap[oldPos.x][oldPos.y] = new Entity(oldPos, d, toMake, true);
             return;
         }
-        Render.tileMap[tilepos.x][tilepos.y] = new Entity(oldPos, d, toMake);
+        Render.tileMap[tilepos.x][tilepos.y] = new Entity(oldPos, d, toMake, true);
         frozen = true;
         onFreeze();
     }

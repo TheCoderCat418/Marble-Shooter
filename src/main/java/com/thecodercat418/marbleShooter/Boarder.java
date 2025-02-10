@@ -74,7 +74,7 @@ public class Boarder extends Tile {
             }
         } else {
             Render.tileMap[tilepos.x + p.x][tilepos.y + p.y] = new Entity(
-                    new Position(tilepos.x + p.x, tilepos.y + p.y), d, tileType);
+                    new Position(tilepos.x + p.x, tilepos.y + p.y), d, tileType, false);
         }
 
     }
