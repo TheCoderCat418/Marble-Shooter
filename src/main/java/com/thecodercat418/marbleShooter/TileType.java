@@ -9,5 +9,9 @@ public enum TileType {
     COLOR_BOMBER,
     LTURN,
     RTURN,
-    STRIKER
+    STRIKER,
+    BIGBOMBER,
+    HUGEBOMBER,
+    RLTURN,
+    LRTURN
 }

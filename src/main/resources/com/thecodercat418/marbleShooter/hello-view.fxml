@@ -12,19 +12,20 @@
       
       </GridPane>
       <Button layoutX="214.0" layoutY="610.0" mnemonicParsing="false" onAction="#nextPiece" text="Bomb" />
-      <Button layoutX="666.0" layoutY="732.0" mnemonicParsing="false" onAction="#nextPiece" text="Left Turn" />
-      <Button layoutX="582.0" layoutY="732.0" mnemonicParsing="false" onAction="#nextPiece" text="Right Turn" />
+      <Button layoutX="590.0" layoutY="657.0" mnemonicParsing="false" onAction="#nextPiece" text="Left Turn" />
+      <Button layoutX="497.0" layoutY="657.0" mnemonicParsing="false" onAction="#nextPiece" text="Right Turn" />
       <Button layoutX="508.0" layoutY="610.0" mnemonicParsing="false" onAction="#nextPiece" text="Striker" />
       <Button layoutX="60.0" layoutY="610.0" mnemonicParsing="false" onAction="#nextPiece" text="Color Bomber" />
       <Button layoutX="195.0" layoutY="638.0" mnemonicParsing="false" onAction="#nextPiece" text="Bigger Bomb" />
       <Button layoutX="193.0" layoutY="670.0" mnemonicParsing="false" onAction="#nextPiece" text="Biggest Bomb" />
-      <Button layoutX="651.0" layoutY="760.0" mnemonicParsing="false" onAction="#nextPiece" text="Right then Left" />
-      <Button layoutX="533.0" layoutY="747.0" mnemonicParsing="false" onAction="#nextPiece" text="Left Then Right" />
+      <Button layoutX="590.0" layoutY="695.0" mnemonicParsing="false" onAction="#nextPiece" text="Right then Left" />
+      <Button layoutX="484.0" layoutY="695.0" mnemonicParsing="false" onAction="#nextPiece" text="Left then Right" />
       <Button layoutX="595.0" layoutY="610.0" mnemonicParsing="false" onAction="#nextPiece" text="Default" />
-      <Label layoutX="30.0" layoutY="76.0" text="Player One:" />
-      <Label layoutX="698.0" layoutY="76.0" text="Player Two:" />
-      <Label layoutX="683.0" layoutY="110.0" text="Tiles Occupied: #" />
-      <Label layoutX="25.0" layoutY="110.0" text="Tiles Occupied: #" />
-      <PieChart fx:id="pie" layoutX="300.0" layoutY="548.0" prefHeight="104.0" prefWidth="13.0" title="Occupation" />
+      <Label fx:id="p1CreditsLabel" layoutX="30.0" layoutY="76.0" text="Player One:" />
+      <Label fx:id="p2CreditsLabel" layoutX="698.0" layoutY="76.0" text="Player Two:" />
+      <Label fx:id="ta2" layoutX="683.0" layoutY="110.0" text="Tiles Occupied: #" />
+      <Label fx:id="ta1" layoutX="25.0" layoutY="110.0" text="Tiles Occupied: #" />
+      <PieChart fx:id="pie" layoutX="300.0" layoutY="548.0" legendSide="TOP" prefHeight="243.0" prefWidth="200.0" title="Occupation" />
+      <Label fx:id="gmor" layoutX="367.0" layoutY="14.0" text="GAME OVER" />
    </children>
 </AnchorPane>

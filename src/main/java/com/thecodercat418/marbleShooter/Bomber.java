@@ -20,8 +20,8 @@ public class Bomber extends Entity {
 
     @Override
     public void onFreeze() {
-        for (int i = -1; i < radius + 1; i++) {
-            for (int j = -1; j < radius + 1; j++) {
+        for (int i = radius*-1; i < radius; i++) {
+            for (int j = radius*-1; j < radius; j++) {
                 if (super.tilepos.x + i < 0 || super.tilepos.y + j < 0) {
                     continue;
                 }

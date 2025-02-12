@@ -16,6 +16,9 @@ public class Boarder extends Tile {
     }
 
     public void onClick(MouseEvent me) {
+        if(Render.running){
+            return;
+        }
         Position p = new Position(0, 0);
         Direction d = null;
         if (tilepos.x == 0) {
@@ -42,6 +45,8 @@ public class Boarder extends Tile {
             Render.teamSideA = true;
         }
 
+        Render.running = true;
+
         if (Render.nextTile != TileType.EMPTY) {
             tileType = Render.nextTile;
             Render.nextTile = TileType.EMPTY;
@@ -51,20 +56,36 @@ public class Boarder extends Tile {
                     Render.tileMap[tilepos.x + p.x][tilepos.y + p.y] = new Bomber(
                             new Position(tilepos.x + p.x, tilepos.y + p.y), d, TileType.EMPTY, 1);
                     break;
+                    case BIGBOMBER:
+                    Render.tileMap[tilepos.x + p.x][tilepos.y + p.y] = new Bomber(
+                            new Position(tilepos.x + p.x, tilepos.y + p.y), d, TileType.EMPTY, 2);
+                    break;
+                    case HUGEBOMBER:
+                    Render.tileMap[tilepos.x + p.x][tilepos.y + p.y] = new Bomber(
+                            new Position(tilepos.x + p.x, tilepos.y + p.y), d, TileType.EMPTY, 3);
+                    break;
 
                 case COLOR_BOMBER:
                     Render.tileMap[tilepos.x + p.x][tilepos.y + p.y] = new Bomber(
-                            new Position(tilepos.x + p.x, tilepos.y + p.y), d, TileType.COLOR_BOMBER, 1);
+                            new Position(tilepos.x + p.x, tilepos.y + p.y), d, TileType.COLOR_BOMBER, 2);
                     break;
 
                 case LTURN:
                     Render.tileMap[tilepos.x + p.x][tilepos.y + p.y] = new Turn(
-                            new Position(tilepos.x + p.x, tilepos.y + p.y), d, true);
+                            new Position(tilepos.x + p.x, tilepos.y + p.y), d, true, false);
                     break;
 
                 case RTURN:
                     Render.tileMap[tilepos.x + p.x][tilepos.y + p.y] = new Turn(
-                            new Position(tilepos.x + p.x, tilepos.y + p.y), d, false);
+                            new Position(tilepos.x + p.x, tilepos.y + p.y), d, false, false);
+                    break;
+                    case LRTURN:
+                    Render.tileMap[tilepos.x + p.x][tilepos.y + p.y] = new Turn(
+                            new Position(tilepos.x + p.x, tilepos.y + p.y), d, true, true);
+                    break;
+                    case RLTURN:
+                    Render.tileMap[tilepos.x + p.x][tilepos.y + p.y] = new Turn(
+                            new Position(tilepos.x + p.x, tilepos.y + p.y), d, false, true);
                     break;
 
                 case STRIKER:

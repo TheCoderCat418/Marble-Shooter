@@ -2,10 +2,12 @@ package com.thecodercat418.marbleShooter;
 
 public class Turn extends Entity {
     boolean isLeft;
+    boolean twice;
 
-    public Turn(Position tilepos, Direction directionStart, boolean isLeft) {
+    public Turn(Position tilepos, Direction directionStart, boolean isLeft, boolean twice) {
         super(tilepos, directionStart, TileType.LTURN, false);
         this.isLeft = isLeft;
+        this.twice = twice;
     }
 
     boolean firstFrozen = true;
@@ -39,6 +41,15 @@ public class Turn extends Entity {
 
         super.frozen = false;
         firstFrozen = false;
+        if (twice) {
+            firstFrozen = true;
+            if(isLeft){
+                isLeft = false;
+            }else{
+                isLeft = true;
+            }
+            twice = false;
+        }
     }
 
 }

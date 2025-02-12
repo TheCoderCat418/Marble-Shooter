@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -18,39 +19,113 @@ public class Render {
   private PieChart pie;
   public static PieChart publicpie;
   public static TileType nextTile = TileType.EMPTY;
-  public boolean running = false;
+  public static boolean running = false;
+  public int p1Credits = 1000;
+  public int p2Credits = 1000;
+  public Label ta1;
+  public Label ta2;
+  public static Label staticta1;
+  public static Label staticta2;
+  public Label p1CreditsLabel;
+  public Label p2CreditsLabel;
+  public Label gmor;
+
 
   public void initialize() {
     startRendering(playBoard);
     publicpie = pie;
+    staticta1 = ta1;
+    staticta2 = ta2;
   }
 
   public void nextPiece(ActionEvent actionEvent) {
+    if(running){
+        return;
+    }
     Button b = (Button) actionEvent.getSource();
+    int toSub = -5;
     switch (b.getText()) {
       case "Bomb":
         nextTile = TileType.BOMBER;
+        toSub = -20;
         break;
       case "Left Turn":
         nextTile = TileType.LTURN;
+        toSub = -15;
         break;
       case "Right Turn":
         nextTile = TileType.RTURN;
+        toSub = -15;
         break;
       case "Striker":
         nextTile = TileType.STRIKER;
+        toSub = -30;
         break;
       case "Color Bomber":
         nextTile = TileType.COLOR_BOMBER;
+        toSub = -25;
+        break;
+        case "Bigger Bomb":
+        nextTile = TileType.BIGBOMBER;
+        toSub = -30;
+        break;
+        case "Biggest Bomb":
+        nextTile = TileType.HUGEBOMBER;
+        toSub = -50;
+        break;
+        case "Right then Left":
+        nextTile = TileType.RLTURN;
+        toSub = -30;
+        break;
+        case "Left then Right":
+        nextTile = TileType.LRTURN;
+        toSub = -30;
+        break;
+      default:
+        nextTile = TileType.EMPTY;
+        toSub = -10;
         break;
     }
-    running  = true;
+    if(teamSideA){
+        p1Credits+=toSub;
+    }else{
+        p2Credits+=toSub;
+    }
+    
+    p1CreditsLabel.setText("Player One: " + p1Credits);
+    p2CreditsLabel.setText("Player Two: " + p2Credits);
     //Make all buttons lock until done
 
   }
   public static void turnOver(){
-    System.out.println(publicpie.getData().getFirst().getName());
-    //unlock buttons
+    int a =0;
+    int b = 0;
+    int e = 0;
+    for (int i = 0; i < tileMap.length; i++) {
+        for (int j = 0; j < tileMap[0].length; j++) {
+            Tile t = tileMap[i][j];
+            switch (t.tt) {
+                case A_ENTITY:
+                    a++;
+                    break;
+                case B_ENTITY:
+                    b++;
+                    break;
+                case EMPTY:
+                e++;
+                break;
+
+            }
+
+        }
+    }
+    publicpie.getData().set(0, new Data("Empty", e));
+    publicpie.getData().set(1, new Data("Red", a));
+    publicpie.getData().set(2, new Data("Blue", b));
+    staticta1.setText("Tiles Occupied: " + a);
+    staticta2.setText("Tiles Occupied: " + b);
+    running = false;
+
   }
 
 
@@ -63,6 +138,7 @@ public class Render {
     private static GridPane gp;
 
     private void startRendering(GridPane gridpane) {
+        gmor.setVisible(false);
         gp = gridpane;
         if (renderStatus) {
             return;
@@ -112,6 +188,8 @@ public class Render {
             }
             pie.getData().clear();
             pie.getData().add(new Data("Blank Spaces", (gridSize.x-2)*(gridSize.y-2)));
+            pie.getData().add(new Data("Blank Spaces", (gridSize.x-2)*(gridSize.y-2)));
+            pie.getData().add(new Data("Blank Spaces", (gridSize.x-2)*(gridSize.y-2)));
         }
 
         new AnimationTimer() {
@@ -125,6 +203,10 @@ public class Render {
     }
 
     private void renderLoop() {
+        if(p1Credits<0 || p2Credits<0){
+            running = true;
+            gmor.setVisible(true);
+        }
         int a = 0;
         int b = 0;
         
@@ -151,11 +233,15 @@ public class Render {
                         t.clockDivider();
                         break;
                     case COLOR_BOMBER:
+                    case BIGBOMBER:
+                    case HUGEBOMBER:
                     case BOMBER:
                         pane.setStyle("-fx-background-color: brown;");
                         t.clockDivider();
                         break;
                     case LTURN:
+                    case LRTURN:
+                    case RLTURN:
                     case RTURN:
                         pane.setStyle("-fx-background-color: green;");
                         t.clockDivider();
